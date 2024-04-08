@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from pages.urls import pages_patterns
+from profiles.urls import profiles_patterns
+from messenger.urls import messenger_patterns
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +29,12 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     # With this we add additional possile paths for 'accounts' to include also de registration ones
     path('accounts/', include('registration.urls')),
+    # Paths para messenger
+    path('messenger/', include(messenger_patterns)),
+    # Paths para profiles
+    path('profiles/', include(profiles_patterns))
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
